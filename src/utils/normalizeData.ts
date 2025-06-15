@@ -1,5 +1,5 @@
 import { Channel, Program } from "planby";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 // interfaces
 import { ResponseData } from "../interfaces";
 
@@ -14,7 +14,6 @@ import { ResponseData } from "../interfaces";
  * `data` parameter passed to the function.
  */
 export default function normalizeData(data: ResponseData) {
-
   const { response } = data;
 
   const normalizedChannels: Channel[] = [];
@@ -31,8 +30,8 @@ export default function normalizeData(data: ResponseData) {
       position: {
         top: 0,
         height: 100,
-      }
-    }
+      },
+    };
 
     normalizedChannels.push(newChannel);
 
@@ -46,14 +45,17 @@ export default function normalizeData(data: ResponseData) {
         till: event.date_end,
         duration: event.duration,
         image: "",
-      }
+      };
 
       normalizedPrograms.push(newProgram);
     }
   }
-
-  return {
-    normalizedChannels,
+  const return_data = {
+    normalizedChannels: normalizedChannels.sort((a, b) =>
+      a.title.localeCompare(b.title)
+    ),
     normalizedPrograms,
   };
+
+  return return_data;
 }
